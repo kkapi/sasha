@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<form id="myForm">
+			<input id="login" type="text" placeholder="login" />
+			<input id="password" type="password" placeholder="password" />
+			<button id="btn" type="submit">Send</button>
+		</form>
+		<script>
+			const form = document.querySelector('form');
+
+			form.addEventListener('submit', e => {
+				e.preventDefault();
+				const email = document.querySelector('#login').value;
+				const password = document.querySelector('#password').value;
+
+				const body = {
+					email,
+					password,
+				};
+
+				fetch('http://localhost:3000/users', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(body),
+				})
+					.then(response => response.json())
+					.then(data => {
+						console.log('Success:', data);
+					})
+					.catch(error => {
+						console.error('Error:', error);
+					});
+
+			});
+		</script>
+	</body>
+</html>
